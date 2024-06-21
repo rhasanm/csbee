@@ -42,22 +42,31 @@ csvew <path_to_csv_file>
 
 ### Keybindings
 
-- **Navigation**:
-  - **Arrow Keys**: Navigate through the table and schema.
-  - **Enter**: Select an item or confirm an action.
-  - **Esc**: Exit the current block or the application.
+#### Normal Mode
+- **`F`**: Enter Filter mode.
+- **`Q`**: Enter Query mode.
+- **`O`**: Enter Order By mode.
+- **`T`**: Enter Table view mode.
+- **`S`**: Enter Schema view mode.
+- **`q`**: Quit the application.
 
-- **Blocks**:
-  - **Tab**: Switch between different blocks (Schema, Table, Filter, Query, Order By).
+#### Filter Mode
+- **`Enter`**: Submit the filter.
+- **Any character**: Add character to filter input.
+- **`Backspace`**: Delete character from filter input.
+- **`Left Arrow`**: Move cursor left in filter input.
+- **`Right Arrow`**: Move cursor right in filter input.
+- **`Esc`**: Exit Filter mode and return to Normal mode.
 
-- **Filter**:
-  - Enter filter criteria to narrow down the displayed data.
+#### Schema Mode
+- **`j` / `Down Arrow`**: Scroll down in the schema.
+- **`k` / `Up Arrow`**: Scroll up in the schema.
+- **`h` / `Left Arrow`**: Scroll left in the schema.
+- **`l` / `Right Arrow`**: Scroll right in the schema.
+- **`Esc`**: Exit Schema mode and return to Normal mode.
 
-- **Query**:
-  - Write and execute SQL-like queries to retrieve specific data.
-
-- **Order By**:
-  - Specify columns to sort the data.
+### Blocks
+- **Tab**: Switch between different blocks (Schema, Table, Filter, Query, Order By).
 
 ## Contributing
 
