@@ -16,7 +16,7 @@
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/csvew.git
+    git clone https://github.com/rhasanm/csvew.git
     cd csvew
     ```
 
