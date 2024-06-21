@@ -16,17 +16,24 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = tui::init()?;
     let args = Args::parse();
     let df = csv_reader(args)?;
-    let result = run(&mut terminal, df);
-    tui::restore()?;
-    result
+    let mut app = App::new(df);
+
+    let result = run(&mut terminal, &mut app);
+    tui::restore(&mut terminal)?;
+
+    if let Err(err) = result {
+        println!("{err:?}");
+    }
+
+    Ok(())
 }
 
-fn run(terminal: &mut tui::Tui, df: DataFrame) -> Result<(), Box<dyn Error>> {
-    let mut app = App::new(df);
+fn run(terminal: &mut tui::Tui, app: &mut App) -> Result<(), Box<dyn Error>> {
     while !app.exit {
-        terminal.draw(|frame| ui(frame, &mut app))?;
-        EventHandler::default().handle_events(&mut app)?;
+        terminal.draw(|frame| ui(frame, app))?;
+        EventHandler::default().handle_events(app)?;
     }
+
     Ok(())
 }
 
