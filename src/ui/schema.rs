@@ -1,8 +1,11 @@
 use polars::prelude::Schema;
 use ratatui::{prelude::*, widgets::*};
 
+use crate::app::{App, InputMode};
+
 pub fn schema_widget(
     schema: Schema,
+    app: &mut App
 ) -> (
     ratatui::widgets::Paragraph<'static>,
     ratatui::widgets::Scrollbar<'static>,
@@ -16,9 +19,13 @@ pub fn schema_widget(
         })
         .collect();
 
+    let style = match app.input_mode {
+        InputMode::Schema => Style::default().fg(Color::Yellow),
+        _ => Style::default(),
+    };
     let widget = Paragraph::new(items.clone())
         .block(Block::bordered().title("Schema"))
-        .style(Style::default().fg(Color::White));
+        .style(style);
 
     // let widget = List::new(items.clone())
     //     .block(Block::bordered().title("Schema"))

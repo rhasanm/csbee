@@ -1,4 +1,4 @@
-use crate::{app::App, ui::ui, args::Args};
+use crate::{app::App, args::Args, ui::ui};
 use clap::Parser;
 use event::EventHandler;
 use polars::io::SerReader;
@@ -7,10 +7,11 @@ use std::error::Error;
 use std::result::Result;
 
 mod app;
+mod args;
 mod event;
+mod handler;
 mod tui;
 mod ui;
-mod args;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = tui::init()?;
