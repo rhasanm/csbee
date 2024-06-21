@@ -70,7 +70,7 @@ csvew <path_to_csv_file>
 
 ## Contributing
 
-We welcome contributions from the community! If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/yourusername/csvew). To contribute code, fork the repository, create a new branch with a descriptive name, make your changes, and open a pull request.
+We welcome contributions from the community! If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/rhasanm/csvew). To contribute code, fork the repository, create a new branch with a descriptive name, make your changes, and open a pull request.
 
 ### Development Setup
 
