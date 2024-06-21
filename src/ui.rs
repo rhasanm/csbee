@@ -43,8 +43,6 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
     // app.schema_scroller.horizontal_scroll_state = app.schema_scroller.horizontal_scroll_state.content_length(schema.clone().len());
 
     // ==================== FUNCTIONS
-    frame.render_widget(functions_schema(app), fn_chunks[0]);
-    frame.render_widget(functions_schema(app), fn_chunks[1]);
     match app.input_mode {
         InputMode::Filter => {
             // Make the cursor visible and ask ratatui to put it at the specified coordinates after
@@ -60,7 +58,11 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
         }
         _ => {}
     }
-    frame.render_widget(functions_schema(app), fn_chunks[2]);
+    let (query_widget, filter_widget, order_widget) = functions_schema(app);
+
+    frame.render_widget(query_widget, fn_chunks[0]);
+    frame.render_widget(filter_widget, fn_chunks[1]);
+    frame.render_widget(order_widget, fn_chunks[2]);
     // ==================== TABLE
     frame.render_widget(table_schema(), tbl_chunks[0]);
     // ==================== SCHEMA

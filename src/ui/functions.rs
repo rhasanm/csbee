@@ -1,21 +1,20 @@
 use crate::app::*;
 use ratatui::{prelude::*, widgets::*};
 
-pub fn functions_schema(app: &mut App) -> Paragraph {
-    // Block::new()
-    //     .border_type(BorderType::Rounded)
-    //     .borders(Borders::ALL)
-    //     .border_style(Style::default().fg(Color::White))
-    //     .style(Style::default().fg(Color::White))
-    //     .title("Block");
-
-    let style = match app.input_mode {
+pub fn functions_schema(app: &mut App) -> (Paragraph, Paragraph, Paragraph) {
+    let filter_style = match app.input_mode {
         InputMode::Filter => Style::default().fg(Color::Yellow),
-        _ => Style::default(),
+        _ => Style::default()
     };
-    let input = Paragraph::new(app.input.as_str())
-        .style(style)
-        .block(Block::bordered().title("Input"));
+    let query = Paragraph::new(app.input.as_str())
+        .style(Style::default())
+        .block(Block::bordered().title("Query"));
+    let filter = Paragraph::new(app.filter_input.as_str())
+        .style(filter_style)
+        .block(Block::bordered().title("Filter"));
+    let order = Paragraph::new(app.input.as_str())
+        .style(Style::default())
+        .block(Block::bordered().title("Order By"));
 
-    input
+    (query, filter, order)
 }
