@@ -16,7 +16,10 @@ pub fn schema_widget(
         })
         .collect();
 
-    let widget = Paragraph::new(items.clone());
+    let widget = Paragraph::new(items.clone())
+        .block(Block::bordered().title("Schema"))
+        .style(Style::default().fg(Color::White));
+
     // let widget = List::new(items.clone())
     //     .block(Block::bordered().title("Schema"))
     //     .style(Style::default().fg(Color::White))
