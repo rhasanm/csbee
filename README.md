@@ -1,8 +1,8 @@
-# csvee (CSV View)
+# csbee (CSV View)
 
 ## Overview
 
-`csvee` (CSV View) is a terminal user interface (TUI) application built with `ratatui` that allows users to view and interact with CSV files in a highly intuitive and user-friendly manner. This application provides a powerful way to inspect, filter, query, and order CSV data, all from within your terminal.
+`csbee` (CSV View) is a terminal user interface (TUI) application built with `ratatui` that allows users to view and interact with CSV files in a highly intuitive and user-friendly manner. This application provides a powerful way to inspect, filter, query, and order CSV data, all from within your terminal.
 
 ## Features
 
@@ -16,8 +16,8 @@
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/rhasanm/csvee.git
-    cd csvee
+    git clone https://github.com/rhasanm/csbee.git
+    cd csbee
     ```
 
 2. **Build the Project**:
@@ -35,9 +35,9 @@
 
 ### Command Line
 
-To open a CSV file with `csvee`, use the following command:
+To open a CSV file with `csbee`, use the following command:
 ```bash
-csvee <path_to_csv_file>
+csbee <path_to_csv_file>
 ```
 
 ### Keybindings
@@ -70,15 +70,15 @@ csvee <path_to_csv_file>
 
 ## Contributing
 
-We welcome contributions from the community! If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/rhasanm/csvee). To contribute code, fork the repository, create a new branch with a descriptive name, make your changes, and open a pull request.
+We welcome contributions from the community! If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/rhasanm/csbee). To contribute code, fork the repository, create a new branch with a descriptive name, make your changes, and open a pull request.
 
 ### Development Setup
 
 1. **Fork the Repository**: Click the "Fork" button at the top of the repository page.
 2. **Clone Your Fork**: 
     ```bash
-    git clone https://github.com/rhasanm/csvee.git
-    cd csvee
+    git clone https://github.com/rhasanm/csbee.git
+    cd csbee
     ```
 3. **Create a Branch**:
     ```bash
@@ -108,4 +108,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Thank you for using `csvee`! If you have any questions or need further assistance, feel free to open an issue on GitHub or contact us at [hasanrakibul.masum@gmail.com].
+Thank you for using `csbee`! If you have any questions or need further assistance, feel free to open an issue on GitHub or contact us at [hasanrakibul.masum@gmail.com].
