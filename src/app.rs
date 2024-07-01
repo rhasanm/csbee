@@ -15,18 +15,16 @@ pub enum InputMode {
 pub struct App {
     pub df: DataFrame,
     pub exit: bool,
-    pub schema_scroller: SchemaScroller,
+    pub schema_scroller: Scroller,
+    pub table_scroller: Scroller,
     pub filter_input: String,
-    /// Current value of the input box
     pub input: String,
-    /// Position of cursor in the editor area.
     pub character_index: usize,
-    /// Current input mode
     pub input_mode: InputMode,
 }
 
 #[derive(Default, Debug)]
-pub struct SchemaScroller {
+pub struct Scroller {
     pub vertical_scroll_state: ScrollbarState,
     pub horizontal_scroll_state: ScrollbarState,
     pub vertical_scroll: usize,
@@ -38,7 +36,8 @@ impl App {
         App {
             exit: false,
             df,
-            schema_scroller: SchemaScroller::default(),
+            schema_scroller: Scroller::default(),
+            table_scroller: Scroller::default(),
             input: String::new(),
             filter_input: String::new(),
             input_mode: InputMode::Normal,

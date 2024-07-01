@@ -1,7 +1,7 @@
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 use std::io::Result;
 
-use crate::{app::{App, InputMode}, handler::{handle_filter_key_event, handle_schema_key_event}};
+use crate::{app::{App, InputMode}, handler::{handle_filter_key_event, handle_schema_key_event, handle_table_key_event}};
 
 #[derive(Debug, Default)]
 pub struct EventHandler {}
@@ -47,7 +47,7 @@ impl EventHandler {
             InputMode::Filter => {}
             InputMode::Query => todo!(),
             InputMode::Order => todo!(),
-            InputMode::Table => todo!(),
+            InputMode::Table => handle_table_key_event(key_event, app),
             InputMode::Schema => handle_schema_key_event(key_event, app),
         }
     }

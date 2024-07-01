@@ -1,10 +1,9 @@
-use ratatui::{prelude::*, widgets::*};
+use ratatui::widgets::*;
 
-pub fn table_schema() -> Block<'static> {
-    Block::new()
-        .border_type(BorderType::Rounded)
-        .borders(Borders::ALL)
-        .border_style(Style::default().fg(Color::White))
-        .style(Style::default().fg(Color::White))
-        .title("Block")
+use crate::app::App;
+
+pub fn table_schema(app: &mut App) -> Paragraph {
+    Paragraph::new("Hello")
+        .block(Block::bordered().title("Table"))
+        .scroll((app.table_scroller.vertical_scroll as u16, 0))
 }
