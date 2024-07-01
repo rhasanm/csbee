@@ -1,4 +1,5 @@
-use polars::frame::DataFrame;
+use polars::{frame::DataFrame, prelude::LazyFrame};
+use polars_sql::SQLContext;
 use ratatui::widgets::*;
 
 #[derive(Debug, Default)]
@@ -11,9 +12,10 @@ pub enum InputMode {
     Schema
 }
 
-#[derive(Debug, Default)]
+#[derive(Default)]
 pub struct App {
     pub df: DataFrame,
+    pub sql_ctx: SQLContext,
     pub exit: bool,
     pub schema_scroller: Scroller,
     pub table_scroller: Scroller,
@@ -32,10 +34,11 @@ pub struct Scroller {
 }
 
 impl App {
-    pub fn new(df: DataFrame) -> App {
+    pub fn new(df: DataFrame, sql_ctx: SQLContext) -> App {
         App {
             exit: false,
             df,
+            sql_ctx,
             schema_scroller: Scroller::default(),
             table_scroller: Scroller::default(),
             input: String::new(),
@@ -90,32 +93,20 @@ impl App {
     pub fn delete_char(&mut self) {
         let is_not_cursor_leftmost = self.character_index != 0;
         if is_not_cursor_leftmost {
-            // Method "remove" is not used on the saved text for deleting the selected char.
-            // Reason: Using remove on String works on bytes instead of the chars.
-            // Using remove would require special care because of char boundaries.
-
             let current_index = self.character_index;
             let from_left_to_current_index = current_index - 1;
 
             match self.input_mode {
                 InputMode::Filter => {
-                    // Getting all characters before the selected character.
                     let before_char_to_delete = self.filter_input.chars().take(from_left_to_current_index);
-                    // Getting all characters after selected character.
                     let after_char_to_delete = self.filter_input.chars().skip(current_index);
 
-                    // Put all characters together except the selected one.
-                    // By leaving the selected one out, it is forgotten and therefore deleted.
                     self.filter_input = before_char_to_delete.chain(after_char_to_delete).collect();
                 }
                 _ => {
-                    // Getting all characters before the selected character.
                     let before_char_to_delete = self.input.chars().take(from_left_to_current_index);
-                    // Getting all characters after selected character.
                     let after_char_to_delete = self.input.chars().skip(current_index);
 
-                    // Put all characters together except the selected one.
-                    // By leaving the selected one out, it is forgotten and therefore deleted.
                     self.input = before_char_to_delete.chain(after_char_to_delete).collect();
                 }
             }
@@ -141,6 +132,7 @@ impl App {
     pub fn submit_message(&mut self) {
         match self.input_mode {
             InputMode::Filter => {
+                self.df = self.sql_ctx.execute(format!("select * from df where {}", self.filter_input).as_str()).and_then(LazyFrame::collect).unwrap();
                 self.filter_input.clear();
             }
             _ => {
