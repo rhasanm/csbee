@@ -49,20 +49,15 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
     app.table_scroller.vertical_scroll_state = app
         .table_scroller
         .vertical_scroll_state
-        .content_length(schema.clone().len());
+        .content_length(app.df.height());
     // app.schema_scroller.horizontal_scroll_state = app.schema_scroller.horizontal_scroll_state.content_length(schema.clone().len());
 
     // ==================== FUNCTIONS
     match app.input_mode {
         InputMode::Filter => {
-            // Make the cursor visible and ask ratatui to put it at the specified coordinates after
-            // rendering
             #[allow(clippy::cast_possible_truncation)]
             frame.set_cursor(
-                // Draw the cursor at the current position in the input field.
-                // This position is can be controlled via the left and right arrow key
                 fn_chunks[1].x + app.character_index as u16 + 1,
-                // Move one line down, from the border to the input line
                 fn_chunks[1].y + 1,
             );
         }

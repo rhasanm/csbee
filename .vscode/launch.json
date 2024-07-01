@@ -9,7 +9,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceRoot}/target/debug/${workspaceRootFolderName}",
-            "args": ["/home/laboratory/datasets/banglalink/March_April.csv"],
+            "args": ["/tmp/Student_performance_data_.csv"],
             "cwd": "${workspaceRoot}",
         },
         {
@@ -19,16 +19,16 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=csvew",
-                    "--package=csvew",
+                    "--bin=csbee",
+                    "--package=csbee",
                 ],
                 "filter": {
-                    "name": "csvew",
+                    "name": "csbee",
                     "kind": "bin"
                 }
             },
             "args": [
-                "/home/laboratory/datasets/banglalink/March_April.csv"
+                "/tmp/Student_performance_data_.csv"
             ],
             "cwd": "${workspaceFolder}"
         },
@@ -40,11 +40,11 @@
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=csvew",
-                    "--package=csvew"
+                    "--bin=csbee",
+                    "--package=csbee"
                 ],
                 "filter": {
-                    "name": "csvew",
+                    "name": "csbee",
                     "kind": "bin"
                 }
             },
