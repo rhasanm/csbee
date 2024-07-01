@@ -4,6 +4,7 @@
 
 `csbee` (CSV View) is a terminal user interface (TUI) application built with `ratatui` that allows users to view and interact with CSV files in a highly intuitive and user-friendly manner. This application provides a powerful way to inspect, filter, query, and order CSV data, all from within your terminal.
 
+![Tui App View](/images/csbee.png)
 ## Features
 
 - **CSV Schema Display**: Displays the schema of the CSV file on one side of the interface, providing a clear view of the column names and their respective data types.
