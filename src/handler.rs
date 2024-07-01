@@ -105,3 +105,25 @@ pub fn handle_table_key_event(key_event: KeyEvent, app: &mut App) {
         _ => {}
     }
 }
+
+pub fn handle_query_key_event(key_event: KeyEvent, app: &mut App) {
+    match key_event.code {
+        KeyCode::Enter => app.submit_message(),
+        KeyCode::Char(to_insert) => {
+            app.enter_char(to_insert);
+        }
+        KeyCode::Backspace => {
+            app.delete_char();
+        }
+        KeyCode::Left => {
+            app.move_cursor_left();
+        }
+        KeyCode::Right => {
+            app.move_cursor_right();
+        }
+        KeyCode::Esc => {
+            app.input_mode = InputMode::Normal;
+        }
+        _ => {}
+    }
+}

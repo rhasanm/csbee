@@ -54,6 +54,13 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
 
     // ==================== FUNCTIONS
     match app.input_mode {
+        InputMode::Query => {
+            #[allow(clippy::cast_possible_truncation)]
+            frame.set_cursor(
+                fn_chunks[0].x + app.character_index as u16 + 1,
+                fn_chunks[0].y + 1,
+            );
+        }
         InputMode::Filter => {
             #[allow(clippy::cast_possible_truncation)]
             frame.set_cursor(
