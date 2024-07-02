@@ -52,7 +52,6 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
         .content_length(app.df.height());
     // app.schema_scroller.horizontal_scroll_state = app.schema_scroller.horizontal_scroll_state.content_length(schema.clone().len());
 
-    // ==================== FUNCTIONS
     match app.input_mode {
         InputMode::Query => {
             #[allow(clippy::cast_possible_truncation)]
@@ -82,7 +81,7 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
     frame.render_widget(query_widget, fn_chunks[0]);
     frame.render_widget(filter_widget, fn_chunks[1]);
     frame.render_widget(order_widget, fn_chunks[2]);
-    // ==================== TABLE
+
     frame.render_widget(table_schema(app), tbl_chunks[0]);
     frame.render_stateful_widget(
         Scrollbar::new(ScrollbarOrientation::VerticalRight)
@@ -91,7 +90,7 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
         tbl_chunks[0],
         &mut app.table_scroller.vertical_scroll_state,
     );
-    // ==================== SCHEMA
+
     frame.render_widget(schema_widget, tbl_chunks[1]);
     frame.render_stateful_widget(
         schema_scrollbar,

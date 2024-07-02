@@ -6,4 +6,7 @@ use clap::Parser;
 pub struct Args {
     #[arg(required=true)]
     pub filename: PathBuf,
+
+    #[arg(long, default_value_t=',')]
+    pub separator: char
 }

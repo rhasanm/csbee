@@ -1,8 +1,9 @@
 use crate::{app::App, args::Args, ui::ui};
-use polars::lazy::frame::IntoLazy;
 use clap::Parser;
 use event::EventHandler;
 use polars::io::SerReader;
+use polars::lazy::frame::IntoLazy;
+use polars::prelude::CsvParseOptions;
 use polars::{frame::DataFrame, prelude::CsvReadOptions};
 use polars_sql::SQLContext;
 use std::error::Error;
@@ -19,7 +20,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = tui::init()?;
     let args = Args::parse();
     let df = csv_reader(args)?;
-    
+
     let mut ctx = SQLContext::new();
     ctx.register("df", df.clone().lazy());
 
@@ -47,6 +48,7 @@ fn run(terminal: &mut tui::Tui, app: &mut App) -> Result<(), Box<dyn Error>> {
 fn csv_reader(args: Args) -> Result<DataFrame, Box<dyn Error>> {
     let df = CsvReadOptions::default()
         .with_ignore_errors(true)
+        .with_parse_options(CsvParseOptions::default().with_separator(args.separator as u8))
         .try_into_reader_with_file_path(args.filename.into())?
         .finish()?;
 
