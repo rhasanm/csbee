@@ -21,7 +21,7 @@ pub struct App {
     pub table_scroller: Scroller,
     pub filter_input: String,
     pub query_input: String,
-    pub input: String,
+    pub order_input: String,
     pub character_index: usize,
     pub input_mode: InputMode,
 }
@@ -42,7 +42,7 @@ impl App {
             sql_ctx,
             schema_scroller: Scroller::default(),
             table_scroller: Scroller::default(),
-            input: String::new(),
+            order_input: String::new(),
             filter_input: String::new(),
             query_input: String::new(),
             input_mode: InputMode::Normal,
@@ -69,9 +69,10 @@ impl App {
             InputMode::Query => {
                 self.query_input.insert(index, new_char);
             }
-            _ => {
-                self.input.insert(index, new_char);
+            InputMode::Order => {
+                self.order_input.insert(index, new_char);
             }
+            _ => {}
         }
         self.move_cursor_right();
     }
@@ -92,13 +93,14 @@ impl App {
                     .nth(self.character_index)
                     .unwrap_or(self.query_input.len())
             }
-            _ => {
-                self.input
+            InputMode::Order => {
+                self.order_input
                     .char_indices()
                     .map(|(i, _)| i)
                     .nth(self.character_index)
-                    .unwrap_or(self.input.len())
+                    .unwrap_or(self.order_input.len())
             }
+            _ => 0
         }
     }
 
@@ -121,12 +123,13 @@ impl App {
 
                     self.filter_input = before_char_to_delete.chain(after_char_to_delete).collect();
                 }
-                _ => {
-                    let before_char_to_delete = self.input.chars().take(from_left_to_current_index);
-                    let after_char_to_delete = self.input.chars().skip(current_index);
+                InputMode::Order => {
+                    let before_char_to_delete = self.order_input.chars().take(from_left_to_current_index);
+                    let after_char_to_delete = self.order_input.chars().skip(current_index);
 
-                    self.input = before_char_to_delete.chain(after_char_to_delete).collect();
+                    self.order_input = before_char_to_delete.chain(after_char_to_delete).collect();
                 }
+                _ => {}
             }
             self.move_cursor_left();
         }
@@ -140,9 +143,10 @@ impl App {
             InputMode::Filter => {
                 new_cursor_pos.clamp(0, self.filter_input.chars().count())
             }
-            _ => {
-                new_cursor_pos.clamp(0, self.input.chars().count())
+            InputMode::Order => {
+                new_cursor_pos.clamp(0, self.order_input.chars().count())
             }
+            _ => 0
         }
     }
 
@@ -160,9 +164,11 @@ impl App {
                 self.df = self.sql_ctx.execute(format!("select * from df where {}", self.filter_input).as_str()).and_then(LazyFrame::collect).unwrap();
                 self.filter_input.clear();
             }
-            _ => {
-                self.input.clear();
+            InputMode::Order => {
+                self.df = self.sql_ctx.execute(format!("select * from df order by {}", self.order_input).as_str()).and_then(LazyFrame::collect).unwrap();
+                self.order_input.clear();
             }
+            _ => {}
         }
         self.reset_cursor();
     }

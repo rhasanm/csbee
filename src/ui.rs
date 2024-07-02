@@ -68,6 +68,13 @@ pub fn ui(frame: &mut Frame, app: &mut App) {
                 fn_chunks[1].y + 1,
             );
         }
+        InputMode::Order => {
+            #[allow(clippy::cast_possible_truncation)]
+            frame.set_cursor(
+                fn_chunks[2].x + app.character_index as u16 + 1,
+                fn_chunks[2].y + 1,
+            );
+        }
         _ => {}
     }
     let (query_widget, filter_widget, order_widget) = functions_schema(app);

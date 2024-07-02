@@ -12,7 +12,7 @@ pub fn functions_schema(app: &mut App) -> (Paragraph, Paragraph, Paragraph) {
     let filter = Paragraph::new(app.filter_input.as_str())
         .style(filter_style)
         .block(Block::bordered().title("Filter"));
-    let order = Paragraph::new(app.input.as_str())
+    let order = Paragraph::new(app.order_input.as_str())
         .style(Style::default())
         .block(Block::bordered().title("Order By"));
 
