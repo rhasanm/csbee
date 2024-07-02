@@ -51,6 +51,16 @@ csbee <path_to_csv_file>
 - **`S`**: Enter Schema view mode.
 - **`q`**: Quit the application.
 
+#### Query Mode
+> use `df` as the table name when query with csbee.
+    
+- **`Enter`**: Submit the query. 
+- **Any character**: Add character to query input.
+- **`Backspace`**: Delete character from query input.
+- **`Left Arrow`**: Move cursor left in query input.
+- **`Right Arrow`**: Move cursor right in query input.
+- **`Esc`**: Exit query mode and return to Normal mode.
+
 #### Filter Mode
 - **`Enter`**: Submit the filter.
 - **Any character**: Add character to filter input.
