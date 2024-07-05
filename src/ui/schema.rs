@@ -24,8 +24,8 @@ pub fn schema_widget(
         _ => Style::default(),
     };
     let widget = Paragraph::new(items.clone())
-        .block(Block::bordered().title("Schema"))
-        .style(style);
+        .block(Block::bordered().title("Schema").border_style(style))
+        .style(Style::default());
 
     // let widget = List::new(items.clone())
     //     .block(Block::bordered().title("Schema"))

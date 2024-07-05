@@ -1,6 +1,6 @@
 use ratatui::{style::{Color, Modifier, Style}, text::{Line, Span}, widgets::*};
 
-use crate::app::App;
+use crate::app::{App, InputMode};
 
 pub fn table_schema(app: &mut App) -> Paragraph {
     let height = app.df.height();
@@ -23,7 +23,12 @@ pub fn table_schema(app: &mut App) -> Paragraph {
         text.push(Line::from(span));
     }
 
+    let style = match app.input_mode {
+        InputMode::Table => Style::default().fg(Color::Yellow),
+        _ => Style::default()
+    };
+
     Paragraph::new(text)
-        .block(Block::bordered().title("Table"))
+        .block(Block::bordered().title("Table").border_style(style))
         .scroll((app.table_scroller.vertical_scroll as u16, 0))
 }
