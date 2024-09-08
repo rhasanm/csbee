@@ -39,6 +39,9 @@ impl EventHandler {
                 KeyCode::Char('q') => {
                     app.exit = true;
                 }
+                KeyCode::Char('c') => {
+                    app.copy_schema();
+                }
                 _ => {}
             }
             InputMode::Filter if key_event.kind == KeyEventKind::Press => match key_event.code {
