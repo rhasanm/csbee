@@ -8,5 +8,8 @@ pub struct Args {
     pub filename: PathBuf,
 
     #[arg(long, default_value_t=',')]
-    pub separator: char
+    pub separator: char,
+
+    #[arg(long, default_value=None)]
+    pub n_rows: Option<usize>
 }

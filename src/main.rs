@@ -49,6 +49,7 @@ fn csv_reader(args: Args) -> Result<DataFrame, Box<dyn Error>> {
     let df = CsvReadOptions::default()
         .with_ignore_errors(true)
         .with_parse_options(CsvParseOptions::default().with_separator(args.separator as u8))
+        .with_n_rows(args.n_rows)
         .try_into_reader_with_file_path(args.filename.into())?
         .finish()?;
 
