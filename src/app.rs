@@ -3,6 +3,9 @@ use polars_sql::SQLContext;
 use ratatui::widgets::*;
 
 use copypasta::{ClipboardContext, ClipboardProvider};
+use std::env;
+use std::process::Command;
+
 
 #[derive(Debug, Default)]
 pub enum InputMode {
@@ -104,15 +107,37 @@ impl App {
         }
     }
 
-    pub fn copy_schema(&mut self) {
-        let mut ctx = ClipboardContext::new().unwrap();
-
+    pub fn copy_schema(&self) {
         let mut formatted_schema = String::new();
         for field in self.df.schema().iter_fields() {
             formatted_schema.push_str(&format!("{}: {}\n", field.name(), field.data_type()));
         }
-
-        ctx.set_contents(formatted_schema.to_owned()).unwrap();
+    
+        let os = env::consts::OS;
+    
+        match os {
+            "windows" => {
+                let mut ctx = ClipboardContext::new().unwrap();
+                ctx.set_contents(formatted_schema).unwrap();
+            },
+            "linux" => {
+                let mut child = Command::new("xclip")
+                    .args(&["-selection", "clipboard"])
+                    .stdin(std::process::Stdio::piped())
+                    .spawn()
+                    .expect("Failed to start xclip");
+    
+                if let Some(stdin) = child.stdin.as_mut() {
+                    use std::io::Write;
+                    writeln!(stdin, "{}", formatted_schema).expect("Failed to write to xclip");
+                }
+    
+                let _ = child.wait().expect("xclip command wasn't running");
+            },
+            _ => {
+                eprintln!("Unsupported platform: {}", os);
+            }
+        }
     }
 
     pub fn delete_char(&mut self) {
