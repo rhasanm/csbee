@@ -4,7 +4,9 @@ use ratatui::widgets::*;
 
 use copypasta::{ClipboardContext, ClipboardProvider};
 use std::env;
-use std::process::Command;
+use std::fs::File;
+use std::io::Write;
+use std::process::{Command, Stdio};
 
 
 #[derive(Debug, Default)]
@@ -121,18 +123,29 @@ impl App {
                 ctx.set_contents(formatted_schema).unwrap();
             },
             "linux" => {
-                let mut child = Command::new("xclip")
-                    .args(&["-selection", "clipboard"])
-                    .stdin(std::process::Stdio::piped())
-                    .spawn()
-                    .expect("Failed to start xclip");
+                let xclip_check = Command::new("which")
+                    .arg("xclip")
+                    .output()
+                    .expect("Failed to check for xclip");
     
-                if let Some(stdin) = child.stdin.as_mut() {
-                    use std::io::Write;
-                    writeln!(stdin, "{}", formatted_schema).expect("Failed to write to xclip");
+                if xclip_check.status.success() {
+                    let mut child = Command::new("xclip")
+                        .args(&["-selection", "clipboard"])
+                        .stdin(Stdio::piped())
+                        .spawn()
+                        .expect("Failed to start xclip");
+    
+                    if let Some(stdin) = child.stdin.as_mut() {
+                        writeln!(stdin, "{}", formatted_schema).expect("Failed to write to xclip");
+                    }
+    
+                    child.wait().expect("xclip command wasn't running");
+                } else {
+                    let mut file = File::create("/tmp/schema.txt")
+                        .expect("Failed to create output file");
+                    file.write_all(formatted_schema.as_bytes())
+                        .expect("Failed to write to output file");
                 }
-    
-                let _ = child.wait().expect("xclip command wasn't running");
             },
             _ => {
                 eprintln!("Unsupported platform: {}", os);
